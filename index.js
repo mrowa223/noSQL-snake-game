@@ -1,11 +1,15 @@
 let scoreBlock;
 let score = 0;
+let gameSpeed = 10; // default speed
+
+const foodImg = new Image();
+foodImg.src = "apple.png";
 
 const config = {
 	step: 0,
 	maxStep: 6,
 	sizeCell: 16,
-	sizeBerry: 16 / 4
+	sizeFood: 16 / 4
 }
 
 const snake = {
@@ -17,31 +21,38 @@ const snake = {
 	maxTails: 3
 }
 
-let berry = {
-	x: 0,
-	y: 0
-} 
-
-
 let canvas = document.querySelector("#game-canvas");
 let context = canvas.getContext("2d");
+
+
+let food = {
+	x: getRandomInt(0, canvas.width / config.sizeCell) * config.sizeCell,
+	y: getRandomInt(0, canvas.height / config.sizeCell) * config.sizeCell
+}
+
+const img = document.createElement("img");
+img.src = "head.png";
+var pat = context.createPattern(img, "no-repeat");
+
 scoreBlock = document.querySelector(".game-score .score-count");
 drawScore();
 
 function gameLoop() {
-
-	requestAnimationFrame( gameLoop );
-	if ( ++config.step < config.maxStep) {
+	setTimeout(() => {
+		requestAnimationFrame(gameLoop);
+	}, gameSpeed);
+	// requestAnimationFrame(gameLoop);
+	if (++config.step < config.maxStep) {
 		return;
 	}
 	config.step = 0;
 
 	context.clearRect(0, 0, canvas.width, canvas.height);
 
-	drawBerry();
+	drawFood();
 	drawSnake();
 }
-requestAnimationFrame( gameLoop );
+requestAnimationFrame(gameLoop);
 
 function drawSnake() {
 	snake.x += snake.dx;
@@ -50,51 +61,54 @@ function drawSnake() {
 	collisionBorder();
 
 	// todo бордер
-	snake.tails.unshift( { x: snake.x, y: snake.y } );
+	snake.tails.unshift({ x: snake.x, y: snake.y });
 
-	if ( snake.tails.length > snake.maxTails ) {
+	if (snake.tails.length > snake.maxTails) {
 		snake.tails.pop();
 	}
 
-	snake.tails.forEach( function(el, index){
+	snake.tails.forEach(function (el, index) {
 		if (index == 0) {
-			context.fillStyle = "#FA0556";
+			context.fillStyle = "#ce1952";
+			// context.fillStyle = pat;
 		} else {
 			context.fillStyle = "#A00034";
 		}
-		context.fillRect( el.x, el.y, config.sizeCell, config.sizeCell );
+		context.fillRect(el.x, el.y, config.sizeCell, config.sizeCell);
 
-		if ( el.x === berry.x && el.y === berry.y ) {
+		if (el.x === food.x && el.y === food.y) {
 			snake.maxTails++;
 			incScore();
-			randomPositionBerry();
+			randomPositionFood();
 		}
 
-		for( let i = index + 1; i < snake.tails.length; i++ ) {
+		for (let i = index + 1; i < snake.tails.length; i++) {
 
-			if ( el.x == snake.tails[i].x && el.y == snake.tails[i].y ) {
+			if (el.x == snake.tails[i].x && el.y == snake.tails[i].y) {
 				refreshGame();
 			}
 
 		}
 
-	} );
+	});
 }
 
 function collisionBorder() {
 	if (snake.x < 0) {
 		snake.x = canvas.width - config.sizeCell;
-	} else if ( snake.x >= canvas.width ) {
+	} else if (snake.x >= canvas.width) {
 		snake.x = 0;
 	}
 
 	if (snake.y < 0) {
 		snake.y = canvas.height - config.sizeCell;
-	} else if ( snake.y >= canvas.height ) {
+	} else if (snake.y >= canvas.height) {
 		snake.y = 0;
 	}
 }
+
 function refreshGame() {
+	alert(`Your score is: ${score}`)
 	score = 0;
 	drawScore();
 
@@ -104,23 +118,51 @@ function refreshGame() {
 	snake.maxTails = 3;
 	snake.dx = config.sizeCell;
 	snake.dy = 0;
+	gameSpeed = 10;
 
-	randomPositionBerry();
+	randomPositionFood();
 }
 
-function drawBerry() {
+function drawFood() {
 	context.beginPath();
 	context.fillStyle = "#A00034";
-	context.arc( berry.x + (config.sizeCell / 2 ), berry.y + (config.sizeCell / 2 ), config.sizeBerry, 0, 2 * Math.PI );
+	// context.arc(food.x + (config.sizeCell / 2), food.y + (config.sizeCell / 2), config.sizeFood, 0, 2 * Math.PI);
+	context.drawImage(foodImg, food.x, food.y);
 	context.fill();
 }
 
-function randomPositionBerry() {
-	berry.x = getRandomInt( 0, canvas.width / config.sizeCell ) * config.sizeCell;
-	berry.y = getRandomInt( 0, canvas.height / config.sizeCell ) * config.sizeCell;
+function randomPositionFood() {
+	food.x = getRandomInt(0, canvas.width / config.sizeCell) * config.sizeCell;
+	food.y = getRandomInt(0, canvas.height / config.sizeCell) * config.sizeCell;
 }
 
 function incScore() {
+	switch (score) {
+		case 2:
+			gameSpeed = gameSpeed - 1
+			console.log(gameSpeed)
+			break;
+		case 4:
+			gameSpeed = gameSpeed - 1
+			console.log(gameSpeed)
+			break;
+		case 6:
+			gameSpeed = gameSpeed - 1
+			console.log(gameSpeed)
+			break;
+		case 8:
+			gameSpeed = gameSpeed - 1
+			console.log(gameSpeed)
+			break;
+		case 10:
+			gameSpeed = gameSpeed - 1
+			console.log(gameSpeed)
+			break;
+
+		default:
+			break;
+	}
+
 	score++;
 	drawScore();
 }
@@ -130,21 +172,29 @@ function drawScore() {
 }
 
 function getRandomInt(min, max) {
-	return Math.floor( Math.random() * (max - min) + min );
+	return Math.floor(Math.random() * (max - min) + min);
 }
 
-document.addEventListener("keydown", function (e) {
-	if ( e.code == "KeyW" ) {
+let dir; // stores direction
+
+document.addEventListener("keydown", direction)
+
+function direction(e) {
+	if (e.code == "KeyW" && dir != "down") {
 		snake.dy = -config.sizeCell;
 		snake.dx = 0;
-	} else if ( e.code == "KeyA" ) {
+		dir = "up";
+	} else if (e.code == "KeyA" && dir != "right") {
 		snake.dx = -config.sizeCell;
 		snake.dy = 0;
-	} else if ( e.code == "KeyS" ) {
+		dir = "left";
+	} else if (e.code == "KeyS" && dir != "up") {
 		snake.dy = config.sizeCell;
 		snake.dx = 0;
-	} else if ( e.code == "KeyD" ) {
+		dir = "down";
+	} else if (e.code == "KeyD" && dir != "left") {
 		snake.dx = config.sizeCell;
 		snake.dy = 0;
+		dir = "right";
 	}
-});
+}
