@@ -1,0 +1,29 @@
+{
+  "name": "nosql-snake-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "server": "nodemon main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrowa223/noSQL-snake-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrowa223/noSQL-snake-game/issues"
+  },
+  "homepage": "https://github.com/mrowa223/noSQL-snake-game#readme",
+  "dependencies": {
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "mongoose": "^6.8.4"
+  },
+  "devDependencies": {
+    "concurrently": "^7.6.0",
+    "nodemon": "^2.0.20"
+  }
+}
