@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "config": "^3.3.9",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "mongoose": "^6.8.4"
   },
