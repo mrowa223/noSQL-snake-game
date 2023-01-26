@@ -3,7 +3,7 @@ let score = 0;
 let gameSpeed = 10; // default speed
 
 const foodImg = new Image();
-foodImg.src = "apple.png";
+foodImg.src = "./img/apple.png";
 
 const config = {
 	step: 0,
@@ -38,9 +38,9 @@ scoreBlock = document.querySelector(".game-score .score-count");
 drawScore();
 
 const startGameButton = document.getElementById("start-game-button");
-const start_sound = new Audio("./start_sound.mp3");
-const eat_sound = new Audio("./eating.mp3");
-const death_sound = new Audio("./death.wav");
+const start_sound = new Audio("./sounds/start_sound.mp3");
+const eat_sound = new Audio("./sounds/eating.mp3");
+const death_sound = new Audio("./sounds/death.wav");
 startGameButton.addEventListener("click", startGame);
 
 
