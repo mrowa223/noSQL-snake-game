@@ -37,77 +37,135 @@ var pat = context.createPattern(img, "no-repeat");
 scoreBlock = document.querySelector(".game-score .score-count");
 drawScore();
 
-function gameLoop() {
-	setTimeout(() => {
-		requestAnimationFrame(gameLoop);
-	}, gameSpeed);
-	// requestAnimationFrame(gameLoop);
-	if (++config.step < config.maxStep) {
-		return;
+const startGameButton = document.getElementById("start-game-button");
+const start_sound = new Audio("./start_sound.mp3");
+const eat_sound = new Audio("./eating.mp3");
+const death_sound = new Audio("./death.wav");
+startGameButton.addEventListener("click", startGame);
+
+
+let gameStarted = false;
+document.addEventListener("keydown", function (event) {
+	if (event.code === "Escape" && gameStarted) {
+		console.log("Game refreshed!")
+		refreshGame();
 	}
-	config.step = 0;
-
-	context.clearRect(0, 0, canvas.width, canvas.height);
-
-	drawFood();
-	drawSnake();
-}
-requestAnimationFrame(gameLoop);
-
-function drawSnake() {
-	snake.x += snake.dx;
-	snake.y += snake.dy;
-
-	collisionBorder();
-
-	// todo бордер
-	snake.tails.unshift({ x: snake.x, y: snake.y });
-
-	if (snake.tails.length > snake.maxTails) {
-		snake.tails.pop();
+	if (event.code === "Space" && !gameStarted) {
+		gameStarted = true;
+		startGameButton.click();
+		console.log("Game started!")
 	}
+});
 
-	snake.tails.forEach(function (el, index) {
-		if (index == 0) {
-			context.fillStyle = "#ce1952";
-			// context.fillStyle = pat;
-		} else {
-			context.fillStyle = "#A00034";
+
+function startGame() {
+	start_sound.play();
+	gameStarted = true;
+	function gameLoop() {
+		setTimeout(() => {
+			requestAnimationFrame(gameLoop);
+		}, gameSpeed);
+		// requestAnimationFrame(gameLoop);
+		if (++config.step < config.maxStep) {
+			return;
 		}
-		context.fillRect(el.x, el.y, config.sizeCell, config.sizeCell);
+		config.step = 0;
 
-		if (el.x === food.x && el.y === food.y) {
-			snake.maxTails++;
-			incScore();
-			randomPositionFood();
+		context.clearRect(0, 0, canvas.width, canvas.height);
+
+		drawFood();
+		drawSnake();
+	}
+	requestAnimationFrame(gameLoop);
+
+	function drawSnake() {
+		snake.x += snake.dx;
+		snake.y += snake.dy;
+
+		collisionBorder();
+
+		// todo бордер
+		snake.tails.unshift({ x: snake.x, y: snake.y });
+
+		if (snake.tails.length > snake.maxTails) {
+			snake.tails.pop();
 		}
 
-		for (let i = index + 1; i < snake.tails.length; i++) {
+		snake.tails.forEach(function (el, index) {
+			if (index == 0) {
+				context.fillStyle = "#19ce2e";
+				// context.fillStyle = pat;
+			} else {
+				context.fillStyle = "#00820f";
+			}
+			context.fillRect(el.x, el.y, config.sizeCell, config.sizeCell);
 
-			if (el.x == snake.tails[i].x && el.y == snake.tails[i].y) {
-				refreshGame();
+			if (el.x === food.x && el.y === food.y) {
+				eat_sound.play()
+				snake.maxTails++;
+				incScore();
+				randomPositionFood();
 			}
 
+			for (let i = index + 1; i < snake.tails.length; i++) {
+
+				if (el.x == snake.tails[i].x && el.y == snake.tails[i].y) {
+					refreshGame();
+				}
+
+			}
+
+		});
+	}
+
+	function collisionBorder() {
+		if (snake.x < 0) {
+			snake.x = canvas.width - config.sizeCell;
+		} else if (snake.x >= canvas.width) {
+			snake.x = 0;
 		}
 
-	});
-}
-
-function collisionBorder() {
-	if (snake.x < 0) {
-		snake.x = canvas.width - config.sizeCell;
-	} else if (snake.x >= canvas.width) {
-		snake.x = 0;
+		if (snake.y < 0) {
+			snake.y = canvas.height - config.sizeCell;
+		} else if (snake.y >= canvas.height) {
+			snake.y = 0;
+		}
 	}
+	function incScore() {
+		switch (score) {
+			case 2:
+				gameSpeed = gameSpeed - 1
+				console.log(gameSpeed)
+				break;
+			case 4:
+				gameSpeed = gameSpeed - 1
+				console.log(gameSpeed)
+				break;
+			case 6:
+				gameSpeed = gameSpeed - 1
+				console.log(gameSpeed)
+				break;
+			case 8:
+				gameSpeed = gameSpeed - 1
+				console.log(gameSpeed)
+				break;
+			case 10:
+				gameSpeed = gameSpeed - 1
+				console.log(gameSpeed)
+				break;
 
-	if (snake.y < 0) {
-		snake.y = canvas.height - config.sizeCell;
-	} else if (snake.y >= canvas.height) {
-		snake.y = 0;
+			default:
+				break;
+		}
+
+		score++;
+		drawScore();
 	}
+	startGameButton.style.display = "none";
 }
 
 function refreshGame() {
+	death_sound.play()
 	alert(`Your score is: ${score}`)
 	score = 0;
 	drawScore();
@@ -121,6 +179,8 @@ function refreshGame() {
 	gameSpeed = 10;
 
 	randomPositionFood();
+
+	location.reload();
 }
 
 function drawFood() {
@@ -136,36 +196,7 @@ function randomPositionFood() {
 	food.y = getRandomInt(0, canvas.height / config.sizeCell) * config.sizeCell;
 }
 
-function incScore() {
-	switch (score) {
-		case 2:
-			gameSpeed = gameSpeed - 1
-			console.log(gameSpeed)
-			break;
-		case 4:
-			gameSpeed = gameSpeed - 1
-			console.log(gameSpeed)
-			break;
-		case 6:
-			gameSpeed = gameSpeed - 1
-			console.log(gameSpeed)
-			break;
-		case 8:
-			gameSpeed = gameSpeed - 1
-			console.log(gameSpeed)
-			break;
-		case 10:
-			gameSpeed = gameSpeed - 1
-			console.log(gameSpeed)
-			break;
 
-		default:
-			break;
-	}
-
-	score++;
-	drawScore();
-}
 
 function drawScore() {
 	scoreBlock.innerHTML = score;
