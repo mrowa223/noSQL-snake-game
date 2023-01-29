@@ -27,8 +27,6 @@ const validation = [
 
 router.post('/signup', validation, async (req, res) => {
 	try {
-		console.log(req.body)
-
 		const errors = validationResult(req)
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ message: 'Validation error', errors })
@@ -60,7 +58,7 @@ router.post('/signup', validation, async (req, res) => {
 
 		return (
 			res
-				// .status(201)
+				.status(201)
 				.json({
 					message: `User ${username} has been succesfully created`
 				})
