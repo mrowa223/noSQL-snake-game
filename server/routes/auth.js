@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const User = require('../models/User')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
 
 const router = new Router()
@@ -36,6 +37,7 @@ router.post('/register', validation, async (req, res) => {
 				.status(400)
 				.json({ message: `User with '${email}' e-mail already exists` })
 		}
+
 		candidate = await User.findOne({
 			username: { $regex: new RegExp(username, 'i') }
 		})
@@ -51,7 +53,7 @@ router.post('/register', validation, async (req, res) => {
 		await user.save()
 
 		return res.status(201).json({
-			message: `User ${username} has been succesfully registered`
+			message: `User '${username}' has been succesfully registered`
 		})
 	} catch (e) {
 		console.log(e)
@@ -61,6 +63,30 @@ router.post('/register', validation, async (req, res) => {
 
 router.post('/login', async (req, res) => {
 	try {
+		const { username, password } = req.body
+
+		const user = await User.findOne({ username: { $regex: new RegExp(username, 'i') } })
+		if (!user) {
+			return res.status(400).json({ message: 'User not found' })
+		}
+
+		const isValid = bcrypt.compareSync(password, user.password)
+		if (!isValid) {
+			return res.status(400).json({ message: 'Invalid password' })
+		}
+
+		const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
+			expiresIn: '1h'
+		})
+
+		return res.json({
+			token,
+			user: {
+				id: user.id,
+				email: user.email,
+				username: user.username
+			}
+		})
 	} catch (e) {
 		console.log(e)
 		res.send({ message: 'Server error' })
