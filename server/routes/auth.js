@@ -9,9 +9,7 @@ const validation = [
 	check('email').isEmail().withMessage('Incorrect e-mail').normalizeEmail(),
 	check('username')
 		.isLength({ min: 4, max: 20 })
-		.withMessage(
-			'Username must be longer than 4 characters and shorter than 20'
-		)
+		.withMessage('Username must be longer than 4 characters and shorter than 20')
 		.matches(/^[a-zA-Z]/)
 		.withMessage('Username must start with letter')
 		.matches(/^\w+$/)
@@ -20,9 +18,7 @@ const validation = [
 		),
 	check('password')
 		.isLength({ min: 4, max: 20 })
-		.withMessage(
-			'Password must be longer than 4 characters and shorter than 20'
-		)
+		.withMessage('Password must be longer than 4 characters and shorter than 20')
 ]
 
 router.post('/register', validation, async (req, res) => {
@@ -44,11 +40,9 @@ router.post('/register', validation, async (req, res) => {
 			username: { $regex: new RegExp(username, 'i') }
 		})
 		if (candidate) {
-			return res
-				.status(400)
-				.json({
-					message: `User with '${username}' username already exists`
-				})
+			return res.status(400).json({
+				message: `User with '${username}' username already exists`
+			})
 		}
 
 		const hashedPassword = await bcrypt.hash(password, 7)
@@ -56,13 +50,17 @@ router.post('/register', validation, async (req, res) => {
 		const user = new User({ email, username, password: hashedPassword })
 		await user.save()
 
-		return (
-			res
-				.status(201)
-				.json({
-					message: `User ${username} has been succesfully registered`
-				})
-		)
+		return res.status(201).json({
+			message: `User ${username} has been succesfully registered`
+		})
+	} catch (e) {
+		console.log(e)
+		res.send({ message: 'Server error' })
+	}
+})
+
+router.post('/login', async (req, res) => {
+	try {
 	} catch (e) {
 		console.log(e)
 		res.send({ message: 'Server error' })
