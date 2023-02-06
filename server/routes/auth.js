@@ -22,6 +22,8 @@ const validation = [
 		.withMessage('Password must be longer than 4 characters and shorter than 20')
 ]
 
+const loginValidation = validation.slice(1)
+
 router.post('/register', validation, async (req, res) => {
 	try {
 		const errors = validationResult(req)
@@ -61,8 +63,13 @@ router.post('/register', validation, async (req, res) => {
 	}
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginValidation, async (req, res) => {
 	try {
+		const errors = validationResult(req)
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ message: 'Validation error', errors })
+		}
+		
 		const { username, password } = req.body
 
 		const user = await User.findOne({ username: { $regex: new RegExp(username, 'i') } })
