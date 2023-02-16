@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const config = require('config')
 const authRouter = require('./routes/auth')
+const recordRouter = require('./routes/record')
 require('dotenv').config()
 
 mongoose.set('strictQuery', true)
@@ -11,6 +12,7 @@ const PORT = config.get('port')
 
 app.use(express.json())
 app.use('/api/auth', authRouter)
+app.use('/api/record', recordRouter)
 
 const start = async () => {
 	try {
