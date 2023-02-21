@@ -3,6 +3,7 @@ const User = require('../models/User')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const { check, validationResult } = require('express-validator')
+const authMiddleware = require('../middleware/auth')
 
 const router = new Router()
 
@@ -69,10 +70,12 @@ router.post('/login', loginValidation, async (req, res) => {
 		if (!errors.isEmpty()) {
 			return res.status(400).json({ message: 'Validation error', errors })
 		}
-		
+
 		const { username, password } = req.body
 
-		const user = await User.findOne({ username: { $regex: new RegExp(username, 'i') } })
+		const user = await User.findOne({
+			username: { $regex: new RegExp(username, 'i') }
+		})
 		if (!user) {
 			return res.status(400).json({ message: 'User not found' })
 		}
@@ -81,6 +84,28 @@ router.post('/login', loginValidation, async (req, res) => {
 		if (!isValid) {
 			return res.status(400).json({ message: 'Invalid password' })
 		}
+
+		const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
+			expiresIn: '1h'
+		})
+
+		return res.json({
+			token,
+			user: {
+				id: user.id,
+				email: user.email,
+				username: user.username
+			}
+		})
+	} catch (e) {
+		console.log(e)
+		res.send({ message: 'Server error' })
+	}
+})
+
+router.get('/auth', authMiddleware, async (req, res) => {
+	try {
+		const user = await User.findOne({ id: req.user.id })
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
 			expiresIn: '1h'
