@@ -1,13 +1,13 @@
 const authMiddleware = require('../middleware/auth')
 const { Router } = require('express')
-const UserDoc = require('../models/User')
+const UserModel = require('../models/User')
 
 const router = new Router()
 
 router.post('/new', authMiddleware, async (req, res) => {
 	try {
 		const { score, time } = req.body
-		const User = await UserDoc.findOne({ _id: req.user.id })
+		const User = await UserModel.findOne({ _id: req.user.id })
 
 		const date = new Date()
 
@@ -19,7 +19,7 @@ router.post('/new', authMiddleware, async (req, res) => {
 
 		User.records.push(record)
 		await User.save()
-		console.log(record)
+
 		bestRecord = User.bestRecord
 		if (bestRecord in User) {
 			if (score in User.bestRecord) {
@@ -31,8 +31,6 @@ router.post('/new', authMiddleware, async (req, res) => {
 						User.bestRecord = record
 						await User.save()
 					}
-				} else {
-					console.log('No changes')
 				}
 			} else {
 				User.bestRecord = record
@@ -42,11 +40,29 @@ router.post('/new', authMiddleware, async (req, res) => {
 			User.bestRecord = record
 			await User.save()
 		}
-		console.log(User.bestRecord)
+
 		await User.save()
 		return res.status(200).json({
 			message: `${User.username}'s record at ${score} points with time ${time} seconds has been saved. Date: ${date}`
 		})
+	} catch (e) {
+		console.log(e)
+		res.send({ message: 'Server error' })
+	}
+})
+
+router.get('/leaderboard', async (req, res) => {
+	try {
+		const leaderboard = await UserModel.aggregate([
+			{ $match: { 'bestRecord.score': { $exists: true } } }, // filter out documents that don't have a bestRecord.score field
+			{ $project: { username: 1, bestRecord: 1 } }, // only include the username and bestRecord fields in the output
+			{ $sort: { 'bestRecord.score': -1 } } // sort by bestRecord.score in descending order
+		]);
+		// if(localStorage.getItem('leaderboard')){
+		// 	localStorage.removeItem('leaderboard')
+		// }
+		// localStorage.setItem('leaderboard', leaderboard)
+		res.send(leaderboard);
 	} catch (e) {
 		console.log(e)
 		res.send({ message: 'Server error' })

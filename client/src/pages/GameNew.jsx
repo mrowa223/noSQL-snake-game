@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import image from "../source/img/apple.png"
 
-import { newRecord } from "../actions/user";
+import { newRecord } from "../actions/record";
 
 const Game = () => {
 
