@@ -173,7 +173,7 @@ const Game = () => {
     }, 1000 / gameSpeed);
 
     return () => clearInterval(gameLoop);
-  }, [snake, food, gameStarted, gameSpeed, step, score]);
+  }, [snake, food, gameStarted, gameSpeed, step, score, config.sizeCell, config.sizeFood, config.maxStep]);
 
   const drawScore = () => {
     scoreRef.current.innerHTML = score;
