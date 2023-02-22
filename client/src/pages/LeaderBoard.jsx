@@ -1,5 +1,5 @@
 import React from 'react'
-
+import HeaderMain from '../layout/HeaderMain'
 const LeaderBoard = () => {
   const dados = [
     {
@@ -47,7 +47,8 @@ const LeaderBoard = () => {
 
     
   ];
-  return (
+  return (<>
+  <HeaderMain/>
     <div className="container-leader">
       <div className="playerslist">
         <div className="table">
@@ -71,7 +72,7 @@ const LeaderBoard = () => {
         </div>
       </div>
     </div>
-
+</>
   )
 }
 

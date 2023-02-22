@@ -242,6 +242,7 @@ const Game = () => {
 
 
   return (
+    
     <div>
       <div id="game">
         <div className="game-header">

@@ -2,12 +2,14 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { signup } from '../actions/user'
 
+import HeaderAuth from "../layout/HeaderAuth"
 const Registration = () => {
 	const [email, setEmail] = useState('')
 	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
 
 	return (
+		<><HeaderAuth/>
 		<div class='page'>
 			<div class='container-reg'>
 				<div class='panel'>
@@ -53,7 +55,7 @@ const Registration = () => {
 				</div>
 			</div>
 		</div>
-	)
+</>	)
 }
 
 export default Registration

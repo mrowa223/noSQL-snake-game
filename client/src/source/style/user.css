@@ -1,0 +1,14 @@
+.container-user {
+  color: white;
+  font-size: 24px;
+  width: 445px;
+  /* height: 600px; */
+  background-color: #161618;
+  padding: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 0px 9px 10px #00000052;
+}
+
+.container-user h1 {
+  font-size: 30px;
+}

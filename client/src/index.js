@@ -11,14 +11,15 @@ import './source/style/notFound.css'
 // import "./source/style/leaderboard.css";
 
 import './source/style/style.css'
+import './source/style/user.css'
 
 import Registration from './pages/Registration'
 import Login from './pages/Login'
 import LeaderBoard from './pages/LeaderBoard'
 import NotFound from './pages/NotFound'
+import User from "./pages/User"
 import { Provider } from 'react-redux'
-import { store } from '../src/reducers/index'
-
+import { store } from '../src/reducers/index';
 const router = createBrowserRouter([
 	{
 		path: '/',
@@ -38,6 +39,11 @@ const router = createBrowserRouter([
 	{
 		path: '/leaderboard',
 		element: <LeaderBoard />,
+		errorElement: <NotFound />
+	},
+	{
+		path: '/user',
+		element: <User />,
 		errorElement: <NotFound />
 	},
 	{
