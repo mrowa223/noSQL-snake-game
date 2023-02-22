@@ -1,9 +1,47 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+// import  "./source/style";
+import "./source/style/leaderboard.css";
+import "./source/style/login.css";
+import "./source/style/notFound.css";
+// import "./source/style/leaderboard.css";
 
-root.render(
-    <App />
+import "./source/style/style.css";
+
+
+import Registration from "./pages/Registration";
+import Login from "./pages/Login";
+import LeaderBoard from "./pages/LeaderBoard";
+import NotFound from "./pages/NotFound";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/signup",
+    element: <Registration />,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <NotFound />,
+  },
+  {
+    path: "/leaderboard",
+    element: <LeaderBoard />,
+    errorElement: <NotFound />,
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );

@@ -1,7 +1,9 @@
+import Game from "./pages/Game";
+import React from "react";
 function App() {
-	return (
-    <div>ayo</div>
-  )
+  return (
+ <Game/>
+  );
 }
 
-export default App
+export default App;
