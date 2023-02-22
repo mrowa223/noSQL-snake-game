@@ -1,11 +1,15 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { login } from '../actions/user'
+import { useDispatch } from 'react-redux'
+
 const Login = () => {
-  const [username, setUsername] = useState('')
+	const [username, setUsername] = useState('')
 	const [password, setPassword] = useState('')
-  return (
-    <>
-      <div className={'page'}>
+	const dispatch = useDispatch()
+
+	return (
+		<div className={'page'}>
 			<div className={'container-login'}>
 				<div className={'panel'}>
 					<div className={'form'}>
@@ -26,7 +30,7 @@ const Login = () => {
 						/>
 
 						<input
-							// onClick={() => dispatch(login(username, password))}
+							onClick={() => dispatch(login(username, password))}
 							type='submit'
 							id='submit'
 							value='Log in'
@@ -44,8 +48,7 @@ const Login = () => {
 				</div>
 			</div>
 		</div>
-    </>
-  )
+	)
 }
 
-export default Login;
+export default Login
