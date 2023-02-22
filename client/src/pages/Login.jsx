@@ -1,6 +1,7 @@
 import React from 'react'
 import LoginP from '../components/LoginP'
-const Registration = () => {
+
+const Login = () => {
   return (
     <>
         <LoginP/>
@@ -8,4 +9,4 @@ const Registration = () => {
   )
 }
 
-export default Registration;
+export default Login;
