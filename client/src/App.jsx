@@ -1,18 +1,19 @@
 import Game from './pages/GameNew'
+import Login from './pages/Login'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import Registration from './pages/Registration'
-import { auth } from './actions/user'
+import { auth } from './actions/user.js'
 
 function App() {
-	const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
 	const dispatch = useDispatch()
+	const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
+	console.log(isAuthenticated)
 
 	useEffect(() => {
 		dispatch(auth())
 	}, [])
 
-	return <Game />
+	return <div>{isAuthenticated ? <Game /> : <Login />}</div>
 }
 
 export default App

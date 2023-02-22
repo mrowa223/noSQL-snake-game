@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
+
 import image from "../source/img/apple.png"
+
 import { newRecord } from "../actions/user";
 
 const Game = () => {
@@ -142,7 +144,6 @@ const Game = () => {
 
           for (let i = index + 1; i < snake.tails.length; i++) {
             if (el.x === snake.tails[i].x && el.y === snake.tails[i].y) {
-              newRecord();
               refreshGame();
               break;
             }
@@ -187,13 +188,11 @@ const Game = () => {
     function refreshGame() {
       // death_sound.play()
       alert(`Your score is: ${score} and time played is: ${min} mins ${sec} secs`)
-<<<<<<< Updated upstream
+      newRecord(score, min*60+sec);
 
       clearTimeout(time);
       // setScore(0);
       // setFood();
-=======
->>>>>>> Stashed changes
       window.location.reload()
     }
 
