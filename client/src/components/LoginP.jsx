@@ -12,7 +12,7 @@ function InputForm() {
             <input type="password" id="password" />
             <input type="submit" id="submit" value="Login" />
             <div className="info">
-              <Link className="info" to="/RP">
+              <Link className="info" to="/signup">
                 Sign up
               </Link>
               <a href="" className="info">

@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
             <input type="submit" id="submit" value="Sign up" />
             <div class="info">
               {/* <a href="login.html" class="info">Login</a> */}
-              <Link className="info" to="/LP">
+              <Link className="info" to="/login">
                 Login
               </Link>
             </div>
