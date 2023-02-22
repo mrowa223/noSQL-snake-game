@@ -4,7 +4,7 @@ const LeaderBoard = () => {
     const dados = [
         {
           id: 1,
-          name: 'aboaboaob',
+          name: 'aboaboaob  ',
           image: 'https://cdn-icons-png.flaticon.com/512/186/186037.png',
           level: 16,
           xp: 100,
