@@ -49,3 +49,16 @@ export const auth = () => {
 }
 
 
+export const newRecord = async (token, score, time) => {
+	try {
+		const response = await axios.post('http://localhost:4000/api/record/new', {
+			token,
+			score,
+			time
+		})
+
+		alert(response.data.message)
+	} catch (e) {
+		alert(e.response.data.message)
+	}
+}
