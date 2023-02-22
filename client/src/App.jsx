@@ -1,9 +1,18 @@
-import Game from "./pages/Game";
-import React from "react";
+import Game from './pages/Game'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import Registration from './pages/Registration'
+import { auth } from './actions/user'
+
 function App() {
-  return (
- <Game/>
-  );
+	const isAuthenticated = useSelector((state) => state.user.isAuthenticated)
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		dispatch(auth)
+	}, [])
+
+	return <Game />
 }
 
-export default App;
+export default App

@@ -93,7 +93,6 @@ router.post('/login', loginValidation, async (req, res) => {
 			token,
 			user: {
 				id: user.id,
-				email: user.email,
 				username: user.username
 			}
 		})
@@ -105,7 +104,7 @@ router.post('/login', loginValidation, async (req, res) => {
 
 router.get('/auth', authMiddleware, async (req, res) => {
 	try {
-		const user = await User.findOne({ id: req.user.id })
+		const user = await User.findOne({ _id: req.user.id })
 
 		const token = jwt.sign({ id: user.id }, process.env.JWT_KEY, {
 			expiresIn: '1h'
@@ -115,7 +114,6 @@ router.get('/auth', authMiddleware, async (req, res) => {
 			token,
 			user: {
 				id: user.id,
-				email: user.email,
 				username: user.username
 			}
 		})
