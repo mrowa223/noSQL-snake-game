@@ -1,4 +1,4 @@
-import Game from './pages/Game'
+import Game from './pages/GameNew'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Registration from './pages/Registration'
