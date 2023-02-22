@@ -1,27 +1,43 @@
+const authMiddleware = require('../middleware/auth')
 const { Router } = require('express')
 const User = require('../models/User')
 
+
 const router = new Router()
 
-router.post('/new', async (req, res) => {
+router.post('/new', authMiddleware, async (req, res) => {
 	try {
-		const { username, score, time } = req.body
+		const { score, time} = req.body
+		const User = await User.findOne({ _id: req.user.id })
 
-		const user = await User.findOne({
-			username: { $regex: new RegExp(username, 'i') }
-		})
+		const date = Date();
 
 		const record = {
 			score: score,
-			time: time
+			time: time,
+			date: date
 		}
 
-		user.records.push(record)
+		User.records.push(record)
+		if(User.bestRecord !== null && User.bestRecord !=='' && User.bestRecord !== 'null'){
+			bestRecord = User.bestRecord
+			if(record.score > bestRecord.score){
+				User.bestRecord = record
+			} else if(record.score === bestRecord.score){
+				if(record.time < bestRecord.time){
+				User.bestRecord = record
+				}
+			} else {
+				console.log('No changes')
+			}
 
-		await user.save()
+		} else {
+			User.bestRecord = record
+		}
 
+		await User.save()
 		return res.status(200).json({
-			message: `${user.username}'s record at ${record.score} points with time ${time} seconds has been saved`
+			message: `${User.username}'s record at ${score} points with time ${time} seconds has been saved. Date: ${date}`
 		})
 	} catch (e) {
 		console.log(e)
