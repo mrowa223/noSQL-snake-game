@@ -6,6 +6,7 @@ import App from './App'
 // import  "./source/style";
 import './source/style/leaderboard.css'
 import './source/style/login.css'
+import './source/style/header.css'
 import './source/style/notFound.css'
 // import "./source/style/leaderboard.css";
 
