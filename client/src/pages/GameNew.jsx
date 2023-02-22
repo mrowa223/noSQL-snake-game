@@ -140,7 +140,7 @@ const Game = () => {
           for (let i = index + 1; i < snake.tails.length; i++) {
             if (el.x === snake.tails[i].x && el.y === snake.tails[i].y) {
               refreshGame();
-              break
+              break;
             }
           }
         });
@@ -185,8 +185,8 @@ const Game = () => {
       alert(`Your score is: ${score} and time played is: ${min} mins ${sec} secs`)
 
       clearTimeout(time);
-      setScore(0);
-      setFood();
+      // setScore(0);
+      // setFood();
       window.location.reload()
     }
 
