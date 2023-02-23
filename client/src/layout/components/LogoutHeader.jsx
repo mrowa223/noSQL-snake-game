@@ -1,13 +1,13 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { logoutUser } from '../../actions/user'
+import { useDispatch } from 'react-redux'
+
 const LogoutHeader = () => {
-    function SessionClear() {
-        localStorage.removeItem('token');
-        sessionStorage.clear()
-// document.cookie
-         }
+	const dispatch = useDispatch()
+
   return (
-  <Link to="/signUp">  <div onClick={()=> SessionClear()}>Logout</div> </Link>
+  <Link to="/signUp">  <div onClick={()=> dispatch(logoutUser())}>Logout</div> </Link>
   )
 }
 

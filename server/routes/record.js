@@ -56,18 +56,26 @@ router.get('/leaderboard', async (req, res) => {
 		const leaderboard = await UserModel.aggregate([
 			{ $match: { 'bestRecord.score': { $exists: true } } }, // filter out documents that don't have a bestRecord.score field
 			{ $project: { username: 1, bestRecord: 1 } }, // only include the username and bestRecord fields in the output
-			{ $sort: { 'bestRecord.score': -1 } } // sort by bestRecord.score in descending order
+			{ $sort: { 'bestRecord.score': -1 , 'bestRecord.time': 1} } // sort by bestRecord.score in descending order
 		]);
-		// if(localStorage.getItem('leaderboard')){
-		// 	localStorage.removeItem('leaderboard')
-		// }
-		// localStorage.setItem('leaderboard', leaderboard)
 		res.send(leaderboard);
 	} catch (e) {
 		console.log(e)
 		res.send({ message: 'Server error' })
 	}
 })
+
+router.get('/userRecords', authMiddleware, async(req, res) => {
+	try {
+		const userId = req.user.id;
+	
+		const user = await UserModel.findById(userId);
+		res.send(user)
+	  } catch (e) {
+		console.log(e);
+		res.status(500).json({ message: 'Server error' });
+	  }
+	});
 
 module.exports = router
 

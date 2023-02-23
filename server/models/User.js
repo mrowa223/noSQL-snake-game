@@ -1,5 +1,4 @@
 const { Schema, model } = require('mongoose')
-const {Record} = require('./Record.js')
 
 const User = new Schema({
 	email: { type: String, required: true, unique: true },

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { setUser } from '../reducers/user'
+import { setUser, logout } from '../reducers/user'
 
 export const signup = async (email, username, password) => {
 	try {
@@ -32,6 +32,16 @@ export const login = (username, password) => {
 			localStorage.setItem('token', response.data.token)
 
 			console.log(response.data)
+		} catch (e) {
+			alert(e.response.data.message)
+		}
+	}
+}
+
+export const logoutUser = () => {
+	return async (dispatch) => {
+		try {
+			dispatch(logout())
 		} catch (e) {
 			alert(e.response.data.message)
 		}
