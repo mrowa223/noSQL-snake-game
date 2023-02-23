@@ -1,0 +1,86 @@
+
+#root {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container-leader {
+  color: white;
+  font-size: 24px;
+  width: 445px;
+  /* height: 600px; */
+  background-color: #161618;
+  margin: auto;
+  margin: auto;
+  padding: 1.5rem;
+  border-radius: 5px;
+  box-shadow: 0px 0px 9px 10px #00000052;
+}
+
+.image {
+  height: 58px;
+  object-fit: cover;
+  width: 58px;
+  /* background-color: black; */
+  border-radius: 50%;
+}
+
+.player {
+  color: white;
+  background-color: #33d446ae;
+  display: grid;
+  grid-template-columns: 0.4fr 2.5fr 1.2fr 1.3fr;
+  align-items: center;
+  min-height: 60px;
+  text-align: center;
+  padding-right: 0.4rem;
+}
+
+.image {
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid white;
+}
+
+.table {
+  font-style: italic;
+  margin-right: 0.1rem;
+  display: grid;
+  font-size: 14px;
+  grid-template-columns: 0.4fr 2.3fr 1fr 1.3fr;
+  text-align: center;
+}
+/* div:nth-child(2) { */
+/* text-align: left; */
+/* margin-left: 5px; */
+/* } */
+
+.image {
+  width: 30px;
+  height: 30px;
+}
+
+.playerslist {
+  color: white;
+  font-size: 16px;
+  overflow: hidden;
+}
+.player:nth-child(odd) {
+  background-color: #00820f;
+  align-items: center;
+}
+
+.user {
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.list {
+  /* overflow: scroll; */
+  /* height: 20rem; */
+  /* overflow-x: hidden; */
+}

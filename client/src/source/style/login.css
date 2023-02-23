@@ -1,0 +1,140 @@
+
+body {
+  background: #353336;
+  font-family: "Inter UI", sans-serif;
+  margin: 0;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  /* height: calc(100% - 40px); */
+  position: absolute;
+  place-content: center;
+  width: calc(100% - 40px);
+}
+
+.container-login {
+  display: flex;
+  height: 320px;
+  margin: 0 auto;
+  width: 640px;
+  justify-content: center;
+}
+
+.container-reg {
+  display: flex;
+  height: 400px;
+  margin: 0 auto;
+  width: 640px;
+  justify-content: center;
+}
+
+.panel {
+  background: #494950;
+  border-radius: 5px;
+  box-shadow: 0px 0px 40px 10px #161618;
+  color: #f1f1f2;
+  position: relative;
+  width: 50%;
+}
+
+.form {
+  margin: 40px;
+  position: absolute;
+}
+
+label {
+  color: #c2c2c5;
+  display: block;
+  font-size: 14px;
+  height: 16px;
+  margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+input {
+  background: transparent;
+  border: 0;
+  border-bottom: solid;
+  color: #f2f2f2;
+  font-size: 20px;
+  /* height: 30px; */
+  line-height: 30px;
+  outline: none !important;
+  width: 100%;
+}
+
+#submit {
+  margin-top: 55px;
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #353336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px #353336;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#submit:hover {
+  background-color: white;
+  color: #00820f;
+  box-shadow: 2px 2px 4px #353336;
+}
+
+.info {
+  position: relative;
+  bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+  color: #9d9da0;
+}
+@import url('https://fonts.googleapis.com/css?family=Amatic+SC');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@300&display=swap');
+
+.list::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+}
+
+.list::-webkit-scrollbar
+{
+	width: 6px;
+	background-color: #F5F5F5;
+}
+
+.list::-webkit-scrollbar-thumb
+{
+	background-color: #646464;
+}
+
+
+#root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+  width: 445px;
+  height: 600px;
+  background-color: black;
+  margin: auto;
+  font-family: 'Amatic SC';
+  margin: auto;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 7px 9px 7px #00000052;
+}
